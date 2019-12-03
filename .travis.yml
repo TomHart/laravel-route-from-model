@@ -1,0 +1,25 @@
+language: php
+
+php:
+  - 7.2
+  - 7.3
+
+env:
+  matrix:
+    - COMPOSER_FLAGS="--prefer-lowest"
+    - COMPOSER_FLAGS=""
+
+before_install:
+  - sudo apt-get update
+  - travis_retry composer self-update
+
+install:
+  - travis_retry composer install --prefer-dist --no-progress --no-suggest
+
+script:
+  - composer run-script test
+  - composer run-script fix-style && composer run-script lint
+
+branches:
+  only:
+    - master
