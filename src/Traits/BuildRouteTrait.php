@@ -2,7 +2,6 @@
 
 namespace TomHart\Routing\Traits;
 
-
 use InvalidArgumentException;
 
 trait BuildRouteTrait

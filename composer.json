@@ -1,6 +1,6 @@
 {
   "name": "tomhart/laravel-route-from-model",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Laravel Route From Model",
   "keywords": [
     "tomhart",
@@ -25,7 +25,8 @@
   },
   "require-dev": {
     "orchestra/testbench": "^3.8 || ^4.0",
-    "phpunit/phpunit": "^8.0"
+    "phpunit/phpunit": "^8.0",
+    "squizlabs/php_codesniffer": "*"
   },
   "autoload": {
     "files": [
@@ -45,6 +46,8 @@
   },
   "scripts": {
     "test": "vendor/bin/phpunit",
-    "test-coverage": "vendor/bin/phpunit --coverage-html=build"
+    "test-coverage": "vendor/bin/phpunit --coverage-html=build",
+    "fix-style": "vendor/bin/phpcbf",
+    "link": "vendor/bin/phpcs"
   }
 }
