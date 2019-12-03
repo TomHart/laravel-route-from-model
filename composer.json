@@ -1,0 +1,50 @@
+{
+  "name": "tomhart/laravel-route-from-model",
+  "version": "1.0.0",
+  "description": "Laravel Route From Model",
+  "keywords": [
+    "tomhart",
+    "laravel",
+    "routing",
+    "route",
+    "router"
+  ],
+  "homepage": "https://github.com/",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tom Hart",
+      "email": "tomharto_@hotmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "illuminate/routing": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0",
+    "illuminate/support": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^3.8 || ^4.0",
+    "phpunit/phpunit": "^8.0"
+  },
+  "autoload": {
+    "files": [
+      "src/helpers.php"
+    ],
+    "psr-4": {
+      "TomHart\\Routing\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "files": [
+      "src/helpers.php"
+    ],
+    "psr-4": {
+      "TomHart\\Routing\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html=build"
+  }
+}
