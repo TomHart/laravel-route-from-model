@@ -1,32 +1,24 @@
-# Laravel Resilient HTTP Client
+# Laravel Route From Model
 
-This library allows you to make HTTP requests with built in cache resiliency.
-The client simply wraps around [Guzzle's](http://docs.guzzlephp.org/en/stable/index.html) `request` method, so it 
-you already use that, this will be very easy to implement into your app.
+This allows a route to be dynamically built just from a Model instance.
 
-### Usage 
+Imagine a route called `test`:
+     
+     '/test/{name}/{id}'
+Calling:
 
-```
-use TomHart\HttpClient\Contracts\ResilientClientInterface;
+     route_from_model('test', Site::find(8));
+will successfully build the route, as `name` and `id` are both attributes on the Site model.
 
-$client = app(ResilientClientInterface::class);
+Further more, once using `route_from_model`, the route can be changed. Without changing the call:
+     
+     route_from_model('test', Site::find(8));
+You can change the route to be:
+     
+     '/test/{name}/{id}/{parent->relationship->value}/{slug}/{otherParent->value}'
+And the route will successfully change, as all the extra parts can be extracted from the Model.
 
-$response = $client->request('GET', '/url');
-```
+Relationships can be called and/or chained with "->" (Imagine Model is a Order):
 
-You can publish the config-file with:
-
-`php artisan vendor:publish --provider="TomHart\HttpClient\ResilientServiceProvider" --tag="config"`
-
-### Caching
-This library utilises 2 different caches, one short term cache, and one longer term cache.
-The short term cache is used every time you call `request`. If the short term cache is a miss, and the HTTP request
-fails, it will only then look into the long term cache.
-
-### Config Options
-
-| Config Item           | Usage                                              | Default  |
-| --------------------- | -------------------------------------------------- | --------:|
-| `cache_time`          | What TTL (seconds) to use for the short term cache | 60       |
-| `fallback_cache_time` | What TTL (seconds) to use for the long term cache  | 3600     |
-# laravel-route-from-model
+     {customer->address->postcode}
+Would get the postcode of the customer who owns the order.
