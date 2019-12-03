@@ -48,6 +48,7 @@
     "test": "vendor/bin/phpunit",
     "test-coverage": "vendor/bin/phpunit --coverage-html=build",
     "fix-style": "vendor/bin/phpcbf",
-    "lint": "vendor/bin/phpcs"
+    "lint": "vendor/bin/phpcs",
+    "check": "vendor/bin/phpunit && vendor/bin/phpcbf && vendor/bin/phpcs"
   }
 }
