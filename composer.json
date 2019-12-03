@@ -48,6 +48,6 @@
     "test": "vendor/bin/phpunit",
     "test-coverage": "vendor/bin/phpunit --coverage-html=build",
     "fix-style": "vendor/bin/phpcbf",
-    "link": "vendor/bin/phpcs"
+    "lint": "vendor/bin/phpcs"
   }
 }
