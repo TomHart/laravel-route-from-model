@@ -5,46 +5,64 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 
-This allows a route to be dynamically built just from a Model instance.
+This library allows a route to be built just from a `Model` instance, automatically pulling out the parameters, rather
+than having to manually pass them.
 
+
+### Simple Example
 Imagine a route called `test`:
      
 ```php
-'/test/{name}/{id}'
+Route::get('/test/{name}')->name('test');
 ```
 Calling:
 
 ```php
-route_from_model('test', Site::find(8));
+route_from_model('test', SomeModel::find(1));
 ```
-will successfully build the route, as `name` and `id` are both attributes on the Site model.
+will successfully build the route, as `name` is an attribute on `SomeModel` that can be retrieved.
 
-Further more, once using `route_from_model`, the route can be changed. Without changing the call:
-     
-```php
-route_from_model('test', Site::find(8));
-```
-You can change the route to be:
-     
-```php
-'/test/{name}/{id}/{parent->relationship->value}/{slug}/{otherParent->value}'
-```
-And the route will successfully change, as all the extra parts can be extracted from the Model.
-
-Relationships can be called and/or chained with "->" (Imagine Model is a Order):
+Now imagine you want to change the route to be:
 
 ```php
-{customer->address->postcode}
+Route::get('/test/{name}/id/{id}/{seo_slug}')->name('test');
 ```
-Would get the postcode of the customer who owns the order.
 
+Using the default route building in Laravel, you'd need to manually go to everywhere the route
+is built, and specify what/where the extra `id` and `seo_slug` data should come from. Providing they
+exist on `SomeModel`, using the exact same `route_from_model` call above, it will automatically be able
+to build the route without you needing to change anything. 
+
+### Relationship
+
+Using `route_from_model`, you're also able to automatically get data from model relationships too, by using `->`
+
+```php
+Route::get('/test/{name}/{id}/{parent->relationship->value}/{slug}/{child->value}')->name('test');
+```
+Providing all those relationships/attributes exist, `route_from_model` will be able to build the URL.
+And the route will successfully change, as all the extra parts can be extracted from the `Model`.
+
+### Trait
 You can also add the `BuildRouteTrait` to your model, and providing the model has a 
 
 ```php
-private $routeName = 'abc';
+private $routeName = 'test';
 ```    
 property, you can build a route using:
 
 ```php
 $route = $model->buildRoute();
+```
+
+### Attributes and static values
+You can also combine `route_from_model` with static values too. Imagine the route: 
+
+```php
+Route::get('/test/{name}/{static}')->name('test');
+```
+where static **isn't** an attribute available on `SomeModel`, you can simply pass it an array as the third parameter.
+
+```php
+route_from_model('test', SomeModel::find(1), ['static' => 'MyValue']);
 ```
