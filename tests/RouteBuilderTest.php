@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
+use InvalidArgumentException;
 use TomHart\Routing\Tests\TestCase;
 use TomHart\Routing\RouteBuilder;
+use TomHart\Routing\Traits\BuildRouteTrait;
 
 class RouteBuilderTest extends TestCase
 {
@@ -121,6 +123,37 @@ class RouteBuilderTest extends TestCase
             ])
         );
     }
+
+
+    /**
+     * Test that a route can be build from a model instance via the trait.
+     */
+    public function testGetBuildingRouteFromModelViaTrait()
+    {
+        /** @var Router $router */
+        $router = app('router');
+        $route = new Route(['GET'], 'foo/{name}', function () {
+            return true;
+        });
+        $route->name('route');
+        $router->getRoutes()->add($route);
+
+        $model = new ModelTraitTest();
+        $model->name = 'test';
+
+        $this->bindUrlGenAndGetRouteBuilder($router);
+        $this->assertSame('http://www.foo.com/foo/test', $model->buildRoute());
+    }
+
+    /**
+     * Test exception throw when using trait with no routeName property.
+     */
+    public function testExceptionThrowIfNoRouteName()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $model = new ModelTraitNoRouteNameTest();
+        $model->buildRoute();
+    }
 }
 
 class ModelTest extends Model
@@ -133,4 +166,16 @@ class ModelTest extends Model
 
 class ModelChildTest extends Model
 {
+}
+
+class ModelTraitTest extends Model
+{
+    use BuildRouteTrait;
+
+    private $routeName = 'route';
+}
+
+class ModelTraitNoRouteNameTest extends Model
+{
+    use BuildRouteTrait;
 }

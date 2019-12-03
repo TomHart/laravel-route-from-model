@@ -22,3 +22,11 @@ Relationships can be called and/or chained with "->" (Imagine Model is a Order):
 
      {customer->address->postcode}
 Would get the postcode of the customer who owns the order.
+
+You can also add the `BuildRouteTrait` to your model, and providing the model has a 
+
+    private $routeName = 'abc';
+    
+property, you can build a route using:
+
+    $route = $model->buildRoute();
