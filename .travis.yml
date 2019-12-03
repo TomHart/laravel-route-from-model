@@ -20,6 +20,9 @@ script:
   - composer run-script test
   - composer run-script fix-style && composer run-script lint
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
 branches:
   only:
     - master

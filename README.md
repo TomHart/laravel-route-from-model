@@ -1,5 +1,7 @@
 # Laravel Route From Model
 
+[![Build Status](https://travis-ci.com/TomHart/laravel-route-from-model.svg?branch=master)](https://travis-ci.com/TomHart/laravel-route-from-model)
+
 This allows a route to be dynamically built just from a Model instance.
 
 Imagine a route called `test`:

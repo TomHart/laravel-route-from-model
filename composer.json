@@ -46,7 +46,7 @@
   },
   "scripts": {
     "test": "vendor/bin/phpunit",
-    "test-coverage": "vendor/bin/phpunit --coverage-html=build",
+    "test-coverage": "vendor/bin/phpunit --coverage-clover=coverage.xml",
     "fix-style": "vendor/bin/phpcbf",
     "lint": "vendor/bin/phpcs",
     "check": "vendor/bin/phpunit && vendor/bin/phpcbf && vendor/bin/phpcs"
