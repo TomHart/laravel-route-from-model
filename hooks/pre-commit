@@ -1,0 +1,6 @@
+#/usr/bin/env sh
+
+composer run-script test && \
+composer run-script fix-style && \
+composer run-script lint && \
+composer run-script analysis

@@ -51,6 +51,7 @@
     "fix-style": "vendor/bin/phpcbf",
     "lint": "vendor/bin/phpcs",
     "check": "vendor/bin/phpunit && vendor/bin/phpcbf && vendor/bin/phpcs",
-    "analysis": "vendor/bin/phpstan --level max src tests"
+    "analysis": "vendor/bin/phpstan analyse --level max src tests",
+    "install-hooks": "git config core.hooksPath hooks/"
   }
 }
