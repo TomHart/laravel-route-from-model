@@ -9,6 +9,7 @@ use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
 use InvalidArgumentException;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use TomHart\Routing\RouteBuilder;
 use TomHart\Routing\Traits\BuildRouteTrait;
 
@@ -53,6 +54,17 @@ class RouteBuilderTest extends TestCase
 
         $builder = $this->bindUrlGenAndGetRouteBuilder($router);
         $this->assertSame('http://www.foo.com/foo/test', $builder->routeFromModel('route', $model));
+    }
+
+
+    /**
+     * Test exception thrown with no route.
+     */
+    public function testNoRoute(): void
+    {
+        $this->expectException(RouteNotFoundException::class);
+        $builder = new RouteBuilder();
+        $this->assertSame('http://www.foo.com/foo/test', $builder->routeFromModel('route', new ModelTest()));
     }
 
 
