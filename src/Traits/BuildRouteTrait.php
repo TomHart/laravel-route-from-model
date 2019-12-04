@@ -10,7 +10,7 @@ trait BuildRouteTrait
 
     /**
      * Builds a route, providing a routeName property exists on the class.
-     * @param array $data Static data to be passed.
+     * @param mixed[] $data Static data to be passed.
      * @return string
      */
     public function buildRoute(array $data = []): string

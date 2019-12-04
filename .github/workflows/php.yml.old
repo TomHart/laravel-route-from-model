@@ -22,4 +22,7 @@ jobs:
       - name: Fix style errors and test linting
         run: composer run-script fix-style && composer run-script lint
 
+      - name: Run Static Analysis
+        run: composer run-script analysis
+
 # bash <(curl -s https://codecov.io/bash)

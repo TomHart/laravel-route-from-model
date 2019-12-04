@@ -17,8 +17,10 @@ install:
   - travis_retry composer install --prefer-dist --no-progress --no-suggest
 
 script:
+  - composer validate
   - composer run-script test
   - composer run-script fix-style && composer run-script lint
+  - composer run-script analysis
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

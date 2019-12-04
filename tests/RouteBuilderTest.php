@@ -1,14 +1,14 @@
 <?php
 
-namespace TomHart\HttpClient\Tests\HttpClient;
+namespace TomHart\Routing\Tests;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
 use InvalidArgumentException;
-use TomHart\Routing\Tests\TestCase;
 use TomHart\Routing\RouteBuilder;
 use TomHart\Routing\Traits\BuildRouteTrait;
 
@@ -39,7 +39,7 @@ class RouteBuilderTest extends TestCase
     /**
      * Test that a route can be build from a model instance.
      */
-    public function testGetBuildingRouteFromModel()
+    public function testGetBuildingRouteFromModel(): void
     {
         /** @var Router $router */
         $router = app('router');
@@ -59,7 +59,7 @@ class RouteBuilderTest extends TestCase
     /**
      * Test that a route can be build from a model instance via the helper.
      */
-    public function testGetBuildingRouteFromModelViaHelper()
+    public function testGetBuildingRouteFromModelViaHelper(): void
     {
         /** @var Router $router */
         $router = app('router');
@@ -71,14 +71,14 @@ class RouteBuilderTest extends TestCase
         $model = new ModelTest();
         $model->name = 'test';
 
-        $builder = $this->bindUrlGenAndGetRouteBuilder($router);
+        $this->bindUrlGenAndGetRouteBuilder($router);
         $this->assertSame('http://www.foo.com/foo/test', route_from_model('route', $model));
     }
 
     /**
      * Test a route can be built from a model with a relationship.
      */
-    public function testGetBuildingRouteFromModelWithRelationship()
+    public function testGetBuildingRouteFromModelWithRelationship(): void
     {
         /** @var Router $router */
         $router = app('router');
@@ -100,7 +100,7 @@ class RouteBuilderTest extends TestCase
     /**
      * Test you can pass extra data along with a model.
      */
-    public function testGetBuildingRouteFromModelAndStaticData()
+    public function testGetBuildingRouteFromModelAndStaticData(): void
     {
         /** @var Router $router */
         $router = app('router');
@@ -128,7 +128,7 @@ class RouteBuilderTest extends TestCase
     /**
      * Test that a route can be build from a model instance via the trait.
      */
-    public function testGetBuildingRouteFromModelViaTrait()
+    public function testGetBuildingRouteFromModelViaTrait(): void
     {
         /** @var Router $router */
         $router = app('router');
@@ -148,7 +148,7 @@ class RouteBuilderTest extends TestCase
     /**
      * Test exception throw when using trait with no routeName property.
      */
-    public function testExceptionThrowIfNoRouteName()
+    public function testExceptionThrowIfNoRouteName(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $model = new ModelTraitNoRouteNameTest();
@@ -156,25 +156,38 @@ class RouteBuilderTest extends TestCase
     }
 }
 
+/**
+ * @property string $name
+ */
 class ModelTest extends Model
 {
-    public function child()
+    public function child(): HasOne
     {
         return $this->hasOne(ModelChildTest::class);
     }
 }
 
+/**
+ * @property string $name
+ */
 class ModelChildTest extends Model
 {
 }
 
+/**
+ * @property string $name
+ */
 class ModelTraitTest extends Model
 {
     use BuildRouteTrait;
 
+    /** @var string */
     private $routeName = 'route';
 }
 
+/**
+ * @property string $name
+ */
 class ModelTraitNoRouteNameTest extends Model
 {
     use BuildRouteTrait;

@@ -4,6 +4,7 @@ namespace TomHart\Routing;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 class RouteBuilder
 {
@@ -45,7 +46,7 @@ class RouteBuilder
      * Would get the postcode of the customer who owns the order.
      * @param string $routeName The route you want to build
      * @param Model $model The model to pull the data from
-     * @param array $data Data to build into the route when it doesn't exist on the model
+     * @param mixed[] $data Data to build into the route when it doesn't exist on the model
      * @return string           The built URL.
      */
     public function routeFromModel(string $routeName, Model $model, array $data = [])
@@ -53,6 +54,11 @@ class RouteBuilder
         $router = $this->getRouter();
         $urlGen = $this->getUrlGenerator();
         $route = $router->getRoutes()->getByName($routeName);
+
+        if (!$route) {
+            throw new RouteNotFoundException("Route $routeName not found");
+        }
+
         $params = $route->parameterNames();
         foreach ($params as $name) {
             if (isset($data[$name])) {
