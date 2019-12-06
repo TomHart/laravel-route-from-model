@@ -15,11 +15,12 @@ use TomHart\Routing\Traits\BuildRouteTrait;
 
 class RouteBuilderTest extends TestCase
 {
-
     /**
      * Create a UrlGenerator from the routes, bind it to the container, and
      * create and return a new instance of RouteBuilder.
+     *
      * @param Router $router
+     *
      * @return RouteBuilder
      */
     private function bindUrlGenAndGetRouteBuilder(Router $router): RouteBuilder
@@ -35,7 +36,6 @@ class RouteBuilderTest extends TestCase
 
         return app(RouteBuilder::class);
     }
-
 
     /**
      * Test that a route can be build from a model instance.
@@ -56,7 +56,6 @@ class RouteBuilderTest extends TestCase
         $this->assertSame('http://www.foo.com/foo/test', $builder->routeFromModel('route', $model));
     }
 
-
     /**
      * Test exception thrown with no route.
      */
@@ -66,7 +65,6 @@ class RouteBuilderTest extends TestCase
         $builder = new RouteBuilder();
         $this->assertSame('http://www.foo.com/foo/test', $builder->routeFromModel('route', new ModelTest()));
     }
-
 
     /**
      * Test that a route can be build from a model instance via the helper.
@@ -135,7 +133,6 @@ class RouteBuilderTest extends TestCase
             ])
         );
     }
-
 
     /**
      * Test that a route can be build from a model instance via the trait.

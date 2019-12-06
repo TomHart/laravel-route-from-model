@@ -20,9 +20,11 @@ if (!function_exists('route_from_model')) {
      * Relationships can be called and/or chained with "->" (Imagine Model is a Order):
      *      {customer->address->postcode}
      * Would get the postcode of the customer who owns the order.
-     * @param string $routeName The route you want to use
-     * @param Model $model
+     *
+     * @param string  $routeName The route you want to use
+     * @param Model   $model
      * @param mixed[] $data
+     *
      * @return string
      */
     function route_from_model(string $routeName, Model $model, array $data = [])

@@ -1,4 +1,5 @@
 <?php
+
 namespace TomHart\Routing;
 
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ class RouteBuilder
 {
     /**
      * Get the router instance.
+     *
      * @return Router
      */
     private function getRouter(): Router
@@ -17,16 +19,15 @@ class RouteBuilder
         return app('router');
     }
 
-
     /**
      * Get the UrlGenerator.
+     *
      * @return UrlGenerator
      */
     private function getUrlGenerator(): UrlGenerator
     {
         return app('url');
     }
-
 
     /**
      * This allows a route to be dynamically built just from a Model instance.
@@ -44,10 +45,12 @@ class RouteBuilder
      * Relationships can be called and/or chained with "->" (Imagine Model is a Order):
      *      {customer->address->postcode}
      * Would get the postcode of the customer who owns the order.
-     * @param string $routeName The route you want to build
-     * @param Model $model The model to pull the data from
-     * @param mixed[] $data Data to build into the route when it doesn't exist on the model
-     * @return string           The built URL.
+     *
+     * @param string  $routeName The route you want to build
+     * @param Model   $model     The model to pull the data from
+     * @param mixed[] $data      Data to build into the route when it doesn't exist on the model
+     *
+     * @return string The built URL.
      */
     public function routeFromModel(string $routeName, Model $model, array $data = [])
     {
@@ -76,6 +79,7 @@ class RouteBuilder
             // Get the value.
             $data[$name] = $root->$last;
         }
+
         return rtrim($urlGen->route($routeName, $data), '?');
     }
 }
