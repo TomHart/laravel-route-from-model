@@ -4,8 +4,7 @@
 [![codecov](https://codecov.io/gh/TomHart/laravel-route-from-model/branch/master/graph/badge.svg)](https://codecov.io/gh/TomHart/laravel-route-from-model)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/TomHart/laravel-route-from-model/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/TomHart/laravel-route-from-model/?branch=master)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/TomHart/laravel-route-from-model?color=green)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-
+![GitHub](https://img.shields.io/github/license/TomHart/laravel-route-from-model?color=green)
 
 This library allows a route to be built just from a `Model` instance, automatically pulling out the parameters, rather
 than having to manually pass them.
