@@ -10,7 +10,6 @@ use TomHart\Utilities\ArrayUtil;
 
 class RouteBuilder
 {
-
     public function __construct()
     {
     }
@@ -52,9 +51,9 @@ class RouteBuilder
      *      {customer->address->postcode}
      * Would get the postcode of the customer who owns the order.
      *
-     * @param string $routeName The route you want to build
-     * @param Model $model The model to pull the data from
-     * @param mixed[] $data Data to build into the route when it doesn't exist on the model
+     * @param string  $routeName The route you want to build
+     * @param Model   $model     The model to pull the data from
+     * @param mixed[] $data      Data to build into the route when it doesn't exist on the model
      *
      * @return string The built URL.
      */
