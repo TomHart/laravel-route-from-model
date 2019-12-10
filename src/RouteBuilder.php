@@ -6,9 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Router;
 use Illuminate\Routing\UrlGenerator;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use TomHart\Utilities\ArrayUtil;
 
 class RouteBuilder
 {
+
+    public function __construct()
+    {
+    }
+
     /**
      * Get the router instance.
      *
@@ -46,9 +52,9 @@ class RouteBuilder
      *      {customer->address->postcode}
      * Would get the postcode of the customer who owns the order.
      *
-     * @param string  $routeName The route you want to build
-     * @param Model   $model     The model to pull the data from
-     * @param mixed[] $data      Data to build into the route when it doesn't exist on the model
+     * @param string $routeName The route you want to build
+     * @param Model $model The model to pull the data from
+     * @param mixed[] $data Data to build into the route when it doesn't exist on the model
      *
      * @return string The built URL.
      */
@@ -63,22 +69,8 @@ class RouteBuilder
         }
 
         $params = $route->parameterNames();
-        foreach ($params as $name) {
-            if (isset($data[$name])) {
-                continue;
-            }
-            $root = $model;
-            // Split the name on -> so we can set URL parts from relationships.
-            $exploded = collect(explode('->', $name));
-            // Remove the last one, this is the attribute we actually want to get.
-            $last = $exploded->pop();
-            // Change the $root to be whatever relationship in necessary.
-            foreach ($exploded as $part) {
-                $root = $root->$part;
-            }
-            // Get the value.
-            $data[$name] = $root->$last;
-        }
+
+        $data = ArrayUtil::populateArrayFromObject($params, $model, $data);
 
         return rtrim($urlGen->route($routeName, $data), '?');
     }
